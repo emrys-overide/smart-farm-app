@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KILIMO DIJI — Daktari wa Mimea</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --jungle:    #0b3d2e;
+      --forest:    #145a3c;
+      --emerald:   #1db954;
+      --lime:      #a3e635;
+      --sun:       #facc15;
+      --mango:     #fb923c;
+      --sky:       #38bdf8;
+      --rose:      #f43f5e;
+      --cream:     #fafdf7;
+      --text-dark: #0d1f14;
+      --text-mid:  #3d5a47;
+      --text-soft: #7a9a84;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(11,61,46,0.97);
+      backdrop-filter: blur(16px);
+      padding: 0 2.5rem;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(163,230,53,0.2);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem; font-weight: 800; letter-spacing: 2px;
+      color: white;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+
+    .logo-leaf {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--lime), var(--emerald));
+      border-radius: 50% 0 50% 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      animation: leafPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes leafPulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(163,230,53,0.4); }
+      50%      { box-shadow: 0 0 0 10px rgba(163,230,53,0); }
+    }
+
+    .logo-text { color: var(--lime); }
+    .logo-text span { color: white; }
+
+    nav { display: flex; gap: 0.3rem; align-items: center; }
+    nav a {
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      padding: 0.45rem 1rem; border-radius: 50px;
+      font-size: 0.875rem; font-weight: 500; transition: all 0.2s;
+    }
+    nav a:hover { background: rgba(163,230,53,0.15); color: var(--lime); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--lime), var(--emerald)) !important;
+      color: var(--jungle) !important; font-weight: 700 !important; margin-left: 0.5rem;
+    }
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 92vh; position: relative;
+      display: flex; align-items: center;
+      overflow: hidden; background: var(--jungle);
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=85') center/cover no-repeat;
+      opacity: 0.18;
+    }
+
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: blobDrift 8s ease-in-out infinite; }
+    .blob-1 { width: 500px; height: 500px; background: var(--emerald); top: -100px; right: -100px; animation-delay: 0s; }
+    .blob-2 { width: 350px; height: 350px; background: var(--lime); bottom: -80px; left: -80px; animation-delay: -3s; }
+    .blob-3 { width: 250px; height: 250px; background: var(--sun); top: 50%; right: 30%; animation-delay: -5s; opacity: 0.15; }
+
+    @keyframes blobDrift {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(30px,-20px) scale(1.05); }
+      66%      { transform: translate(-15px,25px) scale(0.95); }
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; padding: 4rem 2.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+
+    @media(max-width:860px) { .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(163,230,53,0.12); border: 1px solid rgba(163,230,53,0.4);
+      color: var(--lime); padding: 0.4rem 1rem; border-radius: 50px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5.5vw, 5rem); font-weight: 800;
+      line-height: 1.05; color: white; margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .hl {
+      background: linear-gradient(90deg, var(--lime), var(--sun));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .hero-desc { color: rgba(255,255,255,0.65); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2.5rem; font-weight: 300; }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-hprimary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: linear-gradient(135deg, var(--lime), #6ee22f);
+      color: var(--jungle); padding: 0.95rem 2rem; border-radius: 50px;
+      font-weight: 700; font-size: 1rem; cursor: pointer; border: none;
+      transition: all 0.3s; box-shadow: 0 8px 30px rgba(163,230,53,0.4);
+    }
+    .btn-hprimary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(163,230,53,0.5); }
+
+    .btn-hsecondary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: transparent; color: rgba(255,255,255,0.8);
+      padding: 0.95rem 2rem; border-radius: 50px;
+      font-weight: 600; font-size: 1rem; cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.2); transition: all 0.3s;
+    }
+    .btn-hsecondary:hover { border-color: var(--lime); color: var(--lime); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+      background: linear-gradient(90deg, var(--lime), var(--sun));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; }
+
+    .hero-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(163,230,53,0.2);
+      backdrop-filter: blur(20px);
+      border-radius: 28px; padding: 2.5rem;
+      animation: floatCard 4s ease-in-out infinite;
+    }
+    @keyframes floatCard { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+    .hcard-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: white; margin-bottom: 1.5rem; }
+
+    .mini-upload {
+      border: 2px dashed rgba(163,230,53,0.4); border-radius: 16px;
+      padding: 2rem; text-align: center; background: rgba(163,230,53,0.04); margin-bottom: 1.2rem;
+    }
+    .mini-upload .big-icon { font-size: 2.8rem; display: block; margin-bottom: 0.5rem; }
+    .mini-upload p { color: rgba(255,255,255,0.45); font-size: 0.85rem; }
+
+    .disease-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .pill { padding: 0.35rem 0.9rem; border-radius: 50px; font-size: 0.73rem; font-weight: 600; }
+    .pill-g { background: rgba(163,230,53,0.15); color: var(--lime); border: 1px solid rgba(163,230,53,0.3); }
+    .pill-o { background: rgba(251,146,60,0.15); color: var(--mango); border: 1px solid rgba(251,146,60,0.3); }
+    .pill-r { background: rgba(244,63,94,0.15); color: var(--rose); border: 1px solid rgba(244,63,94,0.3); }
+    .pill-b { background: rgba(56,189,248,0.15); color: var(--sky); border: 1px solid rgba(56,189,248,0.3); }
+    .pill-y { background: rgba(250,204,21,0.15); color: var(--sun); border: 1px solid rgba(250,204,21,0.3); }
+
+    /* ===== TICKER ===== */
+    .ticker {
+      background: linear-gradient(90deg, var(--forest), #1a7a4f, var(--forest));
+      padding: 0.8rem 0; overflow: hidden; white-space: nowrap;
+    }
+    .ticker-track { display: inline-block; animation: tickScroll 30s linear infinite; }
+    .ticker-track span { margin: 0 2rem; color: rgba(255,255,255,0.65); font-size: 0.85rem; font-weight: 500; }
+    .ticker-track span strong { color: var(--lime); }
+    @keyframes tickScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== SECTION HELPERS ===== */
+    .sw { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+
+    .slabel {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--emerald); margin-bottom: 1rem;
+    }
+    .slabel::before { content: ''; width: 20px; height: 2px; background: var(--emerald); border-radius: 2px; }
+
+    .stitle {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+      color: var(--text-dark); line-height: 1.1; margin-bottom: 1rem;
+    }
+    .ssub { color: var(--text-soft); font-size: 1.05rem; margin-bottom: 3rem; max-width: 560px; }
+
+    /* ===== UPLOAD SECTION ===== */
+    .upload-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: start; }
+    @media(max-width:820px) { .upload-layout { grid-template-columns: 1fr; } }
+
+    .upload-box {
+      background: white; border: 2px solid #e8f5ec;
+      border-radius: 24px; padding: 2.5rem;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.06);
+    }
+
+    .upload-zone {
+      border: 2.5px dashed #b7e4c7; border-radius: 18px;
+      padding: 3.5rem 2rem; text-align: center; cursor: pointer;
+      transition: all 0.3s; background: #f7fdf9; position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--emerald); background: #edfbf2;
+      transform: scale(1.01); box-shadow: 0 0 0 6px rgba(29,185,84,0.08);
+    }
+
+    .upload-icon-wrap {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; margin-bottom: 1.2rem;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    .upload-zone h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.4rem; }
+    .upload-zone p  { color: var(--text-soft); font-size: 0.88rem; }
+    #fileInput { display: none; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.8rem; border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; border: none; transition: all 0.25s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--emerald), #15a34a);
+      color: white; box-shadow: 0 5px 20px rgba(29,185,84,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(29,185,84,0.45); }
+    .btn-primary:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; transform: none; }
+    .btn-outline { background: transparent; color: var(--forest); border: 2px solid #b7e4c7; }
+    .btn-outline:hover { border-color: var(--emerald); background: #edfbf2; }
+
+    #previewSection { display: none; margin-top: 1.5rem; }
+    .preview-wrap { display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; }
+    #imgPreview { width: 190px; height: 190px; object-fit: cover; border-radius: 18px; border: 3px solid var(--lime); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+    .preview-info { flex: 1; min-width: 180px; }
+    .preview-info h4 { font-weight: 700; color: var(--text-dark); margin-bottom: 0.3rem; }
+    .preview-info p  { color: var(--text-soft); font-size: 0.85rem; margin-bottom: 1rem; }
+
+    #loadingSection { display: none; text-align: center; padding: 3rem 2rem; }
+    .loader-ring {
+      width: 60px; height: 60px;
+      border: 5px solid #d1fae5; border-top-color: var(--emerald);
+      border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 1.2rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loader-dots span {
+      display: inline-block; width: 8px; height: 8px;
+      border-radius: 50%; margin: 0 3px; animation: dot 1.2s infinite;
+    }
+    .loader-dots span:nth-child(1) { background: var(--emerald); }
+    .loader-dots span:nth-child(2) { background: var(--lime); animation-delay: 0.2s; }
+    .loader-dots span:nth-child(3) { background: var(--sun); animation-delay: 0.4s; }
+    @keyframes dot { 0%,80%,100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1.1); opacity: 1; } }
+
+    #resultSection { display: none; }
+    .result-card { background: white; border-radius: 24px; padding: 2.5rem; box-shadow: 0 10px 50px rgba(0,0,0,0.08); border: 2px solid #e8f5ec; }
+    .result-hdr { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+    .disease-name { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--text-dark); }
+    .conf-pill { background: linear-gradient(135deg, var(--lime), var(--emerald)); color: var(--jungle); padding: 0.45rem 1.3rem; border-radius: 50px; font-weight: 800; font-size: 0.95rem; }
+
+    .sev-wrap { margin-bottom: 1.5rem; }
+    .sev-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-soft); margin-bottom: 0.5rem; }
+    .sev-bar { height: 10px; background: #e8f5ec; border-radius: 10px; overflow: hidden; }
+    .sev-fill { height: 100%; border-radius: 10px; transition: width 1.2s cubic-bezier(.17,.67,.3,1.3); }
+    .severity-none     .sev-fill { width: 10%; background: linear-gradient(90deg, #52b788, #a3e635); }
+    .severity-mild     .sev-fill { width: 35%; background: linear-gradient(90deg, var(--sun), #f59e0b); }
+    .severity-moderate .sev-fill { width: 65%; background: linear-gradient(90deg, var(--mango), #ea580c); }
+    .severity-severe   .sev-fill { width: 95%; background: linear-gradient(90deg, var(--rose), #dc2626); }
+
+    .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    @media(max-width:600px) { .res-grid { grid-template-columns: 1fr; } }
+    .rc { border-radius: 16px; padding: 1.3rem 1.5rem; transition: transform 0.2s; }
+    .rc:hover { transform: translateY(-2px); }
+    .rc.full { grid-column: 1/-1; }
+    .rc.blue   { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-left: 4px solid #60a5fa; }
+    .rc.green  { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-left: 4px solid var(--emerald); }
+    .rc.yellow { background: linear-gradient(135deg, #fefce8, #fef9c3); border-left: 4px solid var(--sun); }
+    .rc h5 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-soft); margin-bottom: 0.6rem; font-weight: 700; }
+    .rc p  { font-size: 0.9rem; line-height: 1.65; color: var(--text-dark); }
+
+    .res-actions { margin-top: 1.5rem; display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    /* ===== TIPS BOX ===== */
+    .tips-box { background: linear-gradient(160deg, var(--jungle), #0d4a33); border-radius: 24px; padding: 2rem; color: white; }
+    .tips-box h4 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--lime); margin-bottom: 1.2rem; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: flex-start; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .tip-item p { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
+    .tip-item strong { color: white; display: block; font-size: 0.88rem; margin-bottom: 0.15rem; }
+
+    /* ===== HOW IT WORKS ===== */
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .step-card {
+      background: white; border-radius: 22px; padding: 2rem 1.8rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.06); border: 1px solid #e8f5ec;
+      position: relative; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .step-card:hover { transform: translateY(-6px); box-shadow: 0 16px 50px rgba(0,0,0,0.1); }
+    .step-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .step-card:nth-child(1)::before { background: linear-gradient(90deg, var(--lime), var(--emerald)); }
+    .step-card:nth-child(2)::before { background: linear-gradient(90deg, var(--sky), #0ea5e9); }
+    .step-card:nth-child(3)::before { background: linear-gradient(90deg, var(--sun), var(--mango)); }
+
+    .step-num-wrap { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .step-num { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: white; }
+    .step-card:nth-child(1) .step-num { background: linear-gradient(135deg, var(--lime), var(--emerald)); }
+    .step-card:nth-child(2) .step-num { background: linear-gradient(135deg, var(--sky), #0ea5e9); }
+    .step-card:nth-child(3) .step-num { background: linear-gradient(135deg, var(--sun), var(--mango)); }
+    .step-emoji { font-size: 1.6rem; }
+    .step-card h4 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
+    .step-card p  { font-size: 0.88rem; color: var(--text-soft); line-height: 1.6; }
+
+    /* ===== GALLERY ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 250px 250px;
+      gap: 1rem;
+    }
+    @media(max-width:700px) { .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; } }
+    @media(max-width:480px) { .gallery-grid { grid-template-columns: 1fr; } }
+
+    .gi { border-radius: 18px; overflow: hidden; position: relative; cursor: pointer; }
+    .gi.big { grid-column: span 2; }
+    .gi img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
+    .gi:hover img { transform: scale(1.07); }
+    .gi-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 1.2rem;
+    }
+    .gi-tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.5rem; width: fit-content; }
+    .t-r { background: var(--rose); color: white; }
+    .t-o { background: var(--mango); color: white; }
+    .t-g { background: var(--emerald); color: white; }
+    .t-b { background: var(--sky); color: var(--jungle); }
+    .t-y { background: var(--sun); color: var(--jungle); }
+    .t-p { background: #a78bfa; color: white; }
+    .gi-cap { color: white; font-weight: 600; font-size: 0.9rem; }
+    .gi-sub { color: rgba(255,255,255,0.55); font-size: 0.78rem; }
+
+    /* ===== CTA ===== */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--emerald) 0%, #059669 50%, #0d9488 100%);
+      padding: 4.5rem 2rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-strip::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='2' fill='white' opacity='0.1'/%3E%3C/svg%3E") repeat;
+    }
+    .cta-strip h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,4vw,3rem); font-weight: 800; color: white; margin-bottom: 1rem; position: relative; }
+    .cta-strip p  { color: rgba(255,255,255,0.8); font-size: 1.05rem; margin: 0 auto 2rem; max-width: 500px; position: relative; }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: white; color: var(--forest);
+      padding: 1rem 2.2rem; border-radius: 50px;
+      font-weight: 700; font-size: 1rem; cursor: pointer; border: none;
+      transition: all 0.3s; box-shadow: 0 8px 30px rgba(0,0,0,0.15); position: relative;
+    }
+    .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
+
+    /* ===== FOOTER ===== */
+    footer { background: #060f0a; padding: 3rem 2rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+    @media(max-width:700px) { .footer-inner { grid-template-columns: 1fr; gap: 2rem; } }
+    .flogo { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--lime); letter-spacing: 2px; margin-bottom: 0.8rem; }
+    .fdesc { color: rgba(255,255,255,0.4); font-size: 0.875rem; line-height: 1.65; }
+    .fcol h5 { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+    .fcol a { display: block; color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.875rem; margin-bottom: 0.6rem; transition: color 0.2s; }
+    .fcol a:hover { color: var(--lime); }
+    .footer-bottom { max-width: 1200px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+    .fchips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .fchip { padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.72rem; font-weight: 600; background: rgba(163,230,53,0.1); color: var(--lime); border: 1px solid rgba(163,230,53,0.2); }
+
+    /* ===== REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .rd1 { transition-delay: 0.1s; }
+    .rd2 { transition-delay: 0.2s; }
+    .rd3 { transition-delay: 0.3s; }
+
+    @media(max-width:600px) { header { padding: 0 1.2rem; } nav a:not(.nav-cta) { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-leaf">🌿</div>
+    <div class="logo-text"><span>KILIMO</span> DIJI</div>
+  </div>
+  <nav>
+    <a href="#detect">Gundua</a>
+    <a href="#how">Jinsi Inavyofanya</a>
+    <a href="#gallery">Picha</a>
+    <a href="#detect" class="nav-cta">▶ Anza Sasa</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🌱 AI · Kilimo · Daktari wa Mimea</div>
+      <h1>Daktari wa <span class="hl">Mimea Yako</span> Kwenye Mfuko Wako</h1>
+      <p class="hero-desc">Pakia picha ya jani lililougua — AI yetu itakuambia ugonjwa, ukali wake, dawa na jinsi ya kuzuia haraka zaidi kuliko daktari yeyote.</p>
+      <div class="hero-btns">
+        <button class="btn-hprimary" onclick="document.getElementById('detect').scrollIntoView({behavior:'smooth'})">🔬 Chunguza Sasa</button>
+        <button class="btn-hsecondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">▶ Jinsi Inavyofanya Kazi</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">30+</div><div class="stat-label">Magonjwa</div></div>
+        <div><div class="stat-num">98%</div><div class="stat-label">Usahihi</div></div>
+        <div><div class="stat-num">&lt;5s</div><div class="stat-label">Matokeo</div></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hcard-title">🩺 Mfano wa Uchunguzi</div>
+      <div class="mini-upload">
+        <span class="big-icon">🍃</span>
+        <p>Pakia picha ya jani lako hapa</p>
+      </div>
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:0.5rem;">Magonjwa Tunayogundua:</p>
+      <div class="disease-pills">
+        <span class="pill pill-r">Early Blight</span>
+        <span class="pill pill-o">Leaf Rust</span>
+        <span class="pill pill-g">Healthy ✓</span>
+        <span class="pill pill-b">Powdery Mildew</span>
+        <span class="pill pill-y">Bacterial Wilt</span>
+        <span class="pill pill-r">Late Blight</span>
+        <span class="pill pill-o">Anthracnose</span>
+        <span class="pill pill-b">Mosaic Virus</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>🍅 <strong>Nyanya</strong> — Early Blight</span>
+    <span>🌽 <strong>Mahindi</strong> — Smut Disease</span>
+    <span>🍌 <strong>Ndizi</strong> — Xanthomonas Wilt</span>
+    <span>☕ <strong>Kahawa</strong> — Leaf Rust</span>
+    <span>🥔 <strong>Viazi</strong> — Late Blight</span>
+    <span>🌾 <strong>Ngano</strong> — Fusarium Blight</span>
+    <span>🫑 <strong>Pilipili</strong> — Mosaic Virus</span>
+    <span>🥬 <strong>Kabichi</strong> — Black Rot</span>
+    <span>🍅 <strong>Nyanya</strong> — Early Blight</span>
+    <span>🌽 <strong>Mahindi</strong> — Smut Disease</span>
+    <span>🍌 <strong>Ndizi</strong> — Xanthomonas Wilt</span>
+    <span>☕ <strong>Kahawa</strong> — Leaf Rust</span>
+    <span>🥔 <strong>Viazi</strong> — Late Blight</span>
+    <span>🌾 <strong>Ngano</strong> — Fusarium Blight</span>
+    <span>🫑 <strong>Pilipili</strong> — Mosaic Virus</span>
+    <span>🥬 <strong>Kabichi</strong> — Black Rot</span>
+  </div>
+</div>
+
+<!-- DETECT -->
+<section id="detect" style="background:white;">
+  <div class="sw">
+    <div class="slabel">Gundua Ugonjwa</div>
+    <h2 class="stitle">Pakia Picha ya Jani</h2>
+    <p class="ssub">Chukua picha wazi ya jani lililougua katika mwanga mzuri kwa matokeo bora zaidi.</p>
+
+    <div class="upload-layout">
+      <div>
+        <div class="upload-box">
+          <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon-wrap">🍃</div>
+            <h3>Buruta Picha Hapa</h3>
+            <p>au bonyeza kuchagua — JPG, PNG, WEBP</p>
+            <input type="file" id="fileInput" accept="image/*"/>
+          </div>
+          <div id="previewSection">
+            <div class="preview-wrap" style="margin-top:1.5rem;">
+              <img id="imgPreview" src="" alt="Preview"/>
+              <div class="preview-info">
+                <h4 id="fileName">filename.jpg</h4>
+                <p id="fileSize">0 KB</p>
+                <button class="btn btn-primary" id="analyzeBtn">🔬 Chunguza Mimea</button>
+                <br/><br/>
+                <button class="btn btn-outline" id="resetBtn">↺ Upya</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="loadingSection" class="upload-box" style="margin-top:1.5rem; text-align:center; padding:3rem 2rem;">
+          <div class="loader-ring"></div>
+          <p style="color:var(--text-soft); font-weight:500; margin-bottom:0.8rem;">Inachunguza mifumo ya jani...</p>
+          <div class="loader-dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <div id="resultSection" style="margin-top:1.5rem;">
+          <div class="result-card">
+            <div class="result-hdr">
+              <div class="disease-name" id="diseaseName">—</div>
+              <div class="conf-pill" id="confidencePill">—% Uhakika</div>
+            </div>
+            <div class="sev-wrap">
+              <div class="sev-label">Kiwango cha Ukali</div>
+              <div class="sev-bar"><div class="sev-fill" id="severityFill"></div></div>
+              <small id="severityText" style="color:var(--text-soft);font-size:0.8rem;display:block;margin-top:0.3rem;"></small>
+            </div>
+            <div class="res-grid">
+              <div class="rc blue full"><h5>📋 Maelezo</h5><p id="desc">—</p></div>
+              <div class="rc green"><h5>💊 Dawa na Matibabu</h5><p id="remedy">—</p></div>
+              <div class="rc yellow"><h5>🛡️ Kinga</h5><p id="prevention">—</p></div>
+            </div>
+            <div class="res-actions">
+              <button class="btn btn-primary" id="newScanBtn">🌿 Chunguza Nyingine</button>
+              <button class="btn btn-outline" onclick="window.print()">🖨️ Chapisha Ripoti</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPS -->
+      <div class="tips-box reveal">
+        <h4>💡 Vidokezo vya Picha Bora</h4>
+        <div class="tip-item">
+          <div class="tip-icon" style="background:rgba(163,230,53,0.15);">☀️</div>
+          <p><strong>Mwanga wa Asili</strong>Chukua picha nje wakati wa asubuhi au jioni kwa mwanga laini.</p>
+        </div>
+        <div class="tip-item">
+          <div class="tip-icon" style="background:rgba(56,189,248,0.15);">🔍</div>
+          <p><strong>Karibu na Jani</strong>Hakikisha dalili zinaonekana wazi — umbali wa cm 20–30.</p>
+        </div>
+        <div class="tip-item">
+          <div class="tip-icon" style="background:rgba(250,204,21,0.15);">📐</div>
+          <p><strong>Picha Imara</strong>Shikilia simu kwa nguvu ili picha isiwe na ukungu.</p>
+        </div>
+        <div class="tip-item">
+          <div class="tip-icon" style="background:rgba(251,146,60,0.15);">🍃</div>
+          <p><strong>Jani Moja</strong>Picha iwe na jani moja tu — epuka maeneo mengi.</p>
+        </div>
+        <div class="tip-item">
+          <div class="tip-icon" style="background:rgba(244,63,94,0.15);">⚠️</div>
+          <p><strong>Dalili Zinaonekana</strong>Chagua jani lenye maeneo yanayoonyesha dalili za ugonjwa.</p>
+        </div>
+        <div style="margin-top:1.5rem;padding:1rem;background:rgba(163,230,53,0.08);border-radius:12px;border:1px solid rgba(163,230,53,0.2);">
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);line-height:1.6;">
+            🌍 Kilimo DIJI inasaidia wakulima wa <strong style="color:var(--lime);">Kenya, Tanzania, Uganda</strong> na Afrika Mashariki.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background:linear-gradient(180deg,#f0fdf4 0%,white 100%);">
+  <div class="sw">
+    <div class="slabel">Mchakato</div>
+    <h2 class="stitle">Jinsi Inavyofanya Kazi</h2>
+    <p class="ssub">Hatua tatu rahisi kulinda mazao yako na kuongeza mavuno yako.</p>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num-wrap"><div class="step-num">1</div><div class="step-emoji">📸</div></div>
+        <h4>Piga Picha</h4>
+        <p>Chukua picha wazi, yenye mwanga mzuri ya jani lililoathiriwa likionyesha eneo lenye dalili za ugonjwa.</p>
+      </div>
+      <div class="step-card reveal rd1">
+        <div class="step-num-wrap"><div class="step-num">2</div><div class="step-emoji">🤖</div></div>
+        <h4>AI Inachunguza</h4>
+        <p>Modeli yetu ya kujifunza kwa kina inascanisha jani kwa mifumo ya magonjwa zaidi ya 30 kwa sekunde chache.</p>
+      </div>
+      <div class="step-card reveal rd2">
+        <div class="step-num-wrap"><div class="step-num">3</div><div class="step-emoji">💊</div></div>
+        <h4>Pata Dawa</h4>
+        <p>Pokea utambuzi na kiwango cha ukali, hatua za matibabu na ushauri wa kuzuia ugonjwa kabla haujapanea.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="background:var(--jungle);">
+  <div class="sw">
+    <div class="slabel" style="color:var(--lime);">Picha za Magonjwa</div>
+    <h2 class="stitle" style="color:white;">Magonjwa ya Kawaida ya Mimea</h2>
+    <p class="ssub" style="color:rgba(255,255,255,0.45);">Picha za kweli za magonjwa unayoweza kukutana nayo shambani mwako.</p>
+    <div class="gallery-grid">
+      <div class="gi big reveal">
+        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=85" alt="Healthy farm"/>
+        <div class="gi-overlay">
+          <span class="gi-tag t-g">✅ Yenye Afya</span>
+          <div class="gi-cap">Mimea Yenye Afya — Shamba Bora la Afrika</div>
+          <div class="gi-sub">Hali ya kawaida — hakuna ugonjwa unaoonekana</div>
+        </div>
+      </div>
+      <div class="gi reveal rd1">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Tomato_-_mg_3444.jpg/640px-Tomato_-_mg_3444.jpg" alt="Tomato"
+             onerror="this.src='https://images.unsplash.com/photo-1592150621744-aca64f48394a?w=600&q=80'"/>
+        <div class="gi-overlay">
+          <span class="gi-tag t-r">🍅 Nyanya</span>
+          <div class="gi-cap">Early Blight</div>
+          <div class="gi-sub">Ugonjwa wa kuvu — Alternaria solani</div>
+        </div>
+      </div>
+      <div class="gi reveal rd2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Maize_smut_galls.jpg/640px-Maize_smut_galls.jpg" alt="Maize"
+             onerror="this.src='https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&q=80'"/>
+        <div class="gi-overlay">
+          <span class="gi-tag t-o">🌽 Mahindi</span>
+          <div class="gi-cap">Smut Disease</div>
+          <div class="gi-sub">Ugonjwa wa kuvu — Ustilago maydis</div>
+        </div>
+      </div>
+      <div class="gi reveal rd1">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Banana_Xanthomonas_wilt.jpg/640px-Banana_Xanthomonas_wilt.jpg" alt="Banana"
+             onerror="this.src='https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=600&q=80'"/>
+        <div class="gi-overlay">
+          <span class="gi-tag t-y">🍌 Ndizi</span>
+          <div class="gi-cap">Xanthomonas Wilt</div>
+          <div class="gi-sub">Ugonjwa wa bakteria — BXW</div>
+        </div>
+      </div>
+      <div class="gi reveal rd2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Coffee_leaf_rust_closeup.jpg/640px-Coffee_leaf_rust_closeup.jpg" alt="Coffee"
+             onerror="this.src='https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80'"/>
+        <div class="gi-overlay">
+          <span class="gi-tag t-p">☕ Kahawa</span>
+          <div class="gi-cap">Leaf Rust</div>
+          <div class="gi-sub">Ugonjwa wa kuvu — Hemileia vastatrix</div>
+        </div>
+      </div>
+      <div class="gi reveal rd3">
+        <img src="https://images.unsplash.com/photo-1520637836862-4d197d17c71a?w=600&q=80" alt="Farmer"/>
+        <div class="gi-overlay">
+          <span class="gi-tag t-g">👨‍🌾 Mkulima</span>
+          <div class="gi-cap">Kilimo Bora Afrika</div>
+          <div class="gi-sub">Wakulima wanaotumia teknolojia ya AI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Linda Mashamba Yako Leo! 🌾</h2>
+  <p>Jiunge na maelfu ya wakulima wa Afrika Mashariki wanaotumia KILIMO DIJI kulinda mazao yao.</p>
+  <button class="btn-cta" onclick="document.getElementById('detect').scrollIntoView({behavior:'smooth'})">🔬 Anza Uchunguzi wa Bure</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="flogo">KILIMO DIJI</div>
+      <p class="fdesc">Daktari wa mimea anayetumia akili bandia kukusaidia kulinda mazao yako na kuongeza mavuno. Tunasaidia wakulima wa Afrika Mashariki.</p>
+    </div>
+    <div class="fcol">
+      <h5>Viungo</h5>
+      <a href="#detect">Gundua Ugonjwa</a>
+      <a href="#how">Jinsi Inavyofanya</a>
+      <a href="#gallery">Picha</a>
+    </div>
+    <div class="fcol">
+      <h5>Teknolojia</h5>
+      <a href="#">Flask + Python</a>
+      <a href="#">TensorFlow AI</a>
+      <a href="#">30+ Magonjwa</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 KILIMO DIJI — Imetengenezwa kwa ❤️ kwa wakulima wa Afrika</p>
+    <div class="fchips">
+      <span class="fchip">Flask</span>
+      <span class="fchip">TensorFlow</span>
+      <span class="fchip">AI</span>
+      <span class="fchip">🌍 Afrika</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const uploadZone = document.getElementById('uploadZone');
+  const fileInput  = document.getElementById('fileInput');
+  const imgPreview = document.getElementById('imgPreview');
+  const previewSec = document.getElementById('previewSection');
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  const resetBtn   = document.getElementById('resetBtn');
+  const loadingSec = document.getElementById('loadingSection');
+  const resultSec  = document.getElementById('resultSection');
+  const newScanBtn = document.getElementById('newScanBtn');
+
+  let selectedFile = null;
+
+  uploadZone.addEventListener('click', () => fileInput.click());
+
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
+
+  function loadFile(file) {
+    selectedFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      imgPreview.src = e.target.result;
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('fileSize').textContent = (file.size/1024).toFixed(1)+' KB';
+      previewSec.style.display = 'block';
+      resultSec.style.display  = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  resetBtn.addEventListener('click', reset);
+  newScanBtn.addEventListener('click', reset);
+
+  function reset() {
+    selectedFile = null; fileInput.value = '';
+    previewSec.style.display = 'none';
+    resultSec.style.display  = 'none';
+    loadingSec.style.display = 'none';
+  }
+
+  analyzeBtn.addEventListener('click', async () => {
+    if (!selectedFile) return;
+    analyzeBtn.disabled = true;
+    loadingSec.style.display = 'block';
+    resultSec.style.display  = 'none';
+
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+
+    try {
+      const res  = await fetch('/predict', { method:'POST', body:formData });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      displayResult(data);
+    } catch(err) {
+      alert('Hitilafu: ' + err.message);
+    } finally {
+      loadingSec.style.display = 'none';
+      analyzeBtn.disabled = false;
+    }
+  });
+
+  function displayResult(data) {
+    document.getElementById('diseaseName').textContent    = data.label || data.disease_key;
+    document.getElementById('confidencePill').textContent = Math.round(data.confidence*100)+'% Uhakika';
+    document.getElementById('desc').textContent           = data.description || '—';
+    document.getElementById('remedy').textContent         = data.remedy      || '—';
+    document.getElementById('prevention').textContent     = data.prevention  || '—';
+
+    const sev = data.severity || 'none';
+    document.querySelector('.sev-wrap').className = 'sev-wrap severity-'+sev;
+    document.getElementById('severityText').textContent = {
+      none:'Hakuna ugonjwa', mild:'Maambukizi kidogo',
+      moderate:'Wastani — chukua hatua hivi karibuni', severe:'Kali sana — hatua za haraka zinahitajika'
+    }[sev] || sev;
+
+    resultSec.style.display = 'block';
+    resultSec.scrollIntoView({ behavior:'smooth' });
+  }
+
+  /* Scroll Reveal */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
