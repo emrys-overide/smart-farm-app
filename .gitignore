@@ -1,0 +1,16 @@
+# Python virtual environments
+venv/
+.venv/
+env/
+.env/
+kilimo-Diji/
+# Python bytecode / caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Other common ignores for ML projects
+*.pth   # if you have large checkpoints you don't want versioned
+*.h5
+*.onnx   # optional — only if models are huge/re-generated
