@@ -14,3 +14,10 @@ __pycache__/
 *.pth   # if you have large checkpoints you don't want versioned
 *.h5
 *.onnx   # optional — only if models are huge/re-generated
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
