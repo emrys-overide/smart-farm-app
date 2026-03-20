@@ -20,4 +20,8 @@ env/
 __pycache__/
 *.pyc
 *.pyo
+*.pydvenv/
+__pycache__/
+*.pyc
+*.pyo
 *.pyd
