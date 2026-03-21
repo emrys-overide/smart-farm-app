@@ -1,6 +1,7 @@
 flask==3.0.0
 pillow>=10.2.0,<13.0.0
 numpy==1.26.4
-torch==2.2.0
-torchvision==0.17.0
 gunicorn==21.2.0
+torch>=2.10.0
+torchvision>=0.18.0
+torchaudio>=2.10.0
