@@ -8,8 +8,12 @@ Contact : emryspaul7@gmail.com | +254 759 670 456
 
 import io
 import os
+import logging
 
-import numpy as np
+from PIL import UnidentifiedImageError
+
+logger = logging.getLogger(__name__)
+
 import torch
 import torch.nn as nn
 from flask import Flask, jsonify, render_template, request
@@ -77,16 +81,23 @@ print(f"⚙️  Running on: {DEVICE}")
 model = build_model(num_classes=len(CLASS_NAMES))
 
 if os.path.exists(MODEL_PATH):
-    state = torch.load(MODEL_PATH, map_location=DEVICE)
-    if isinstance(state, dict):
-        model.load_state_dict(state)
+    with open(MODEL_PATH, "rb") as checkpoint:
+        is_lfs_pointer = checkpoint.read(64).startswith(b"version https://git-lfs.github.com/spec/v1")
+    if is_lfs_pointer:
+        logger.warning("Model file is a Git LFS pointer; download the actual checkpoint before serving predictions")
+        model = None
     else:
-        model = state
-    model = model.to(DEVICE)
-    model.eval()
-    print(f"✅  Model loaded from '{MODEL_PATH}'")
+        try:
+            state = torch.load(MODEL_PATH, map_location=DEVICE, weights_only=True)
+            model.load_state_dict(state)
+            model = model.to(DEVICE)
+            model.eval()
+            logger.info("Model loaded from %s", MODEL_PATH)
+        except (OSError, RuntimeError, ValueError) as exc:
+            logger.error("Model unavailable: %s", exc)
+            model = None
 else:
-    print(f"⚠️  '{MODEL_PATH}' not found — running in DEMO mode")
+    logger.warning("Model checkpoint not found: %s", MODEL_PATH)
     model = None
 
 # ==================================================================
@@ -233,8 +244,7 @@ def predict_disease(image_bytes: bytes) -> dict:
         class_idx  = probs.argmax().item()
         confidence = float(probs[class_idx])
     else:
-        class_idx  = np.random.randint(0, len(CLASS_NAMES))
-        confidence = round(float(np.random.uniform(0.70, 0.99)), 2)
+        raise RuntimeError("Disease model is unavailable")
 
     disease_key  = CLASS_NAMES[class_idx]
     disease_data = DISEASE_INFO.get(disease_key, {
@@ -257,6 +267,17 @@ def predict_disease(image_bytes: bytes) -> dict:
 # ==================================================================
 
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
+
+
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok" if model is not None else "unavailable", "model_loaded": model is not None}), (200 if model is not None else 503)
+
+
+@app.errorhandler(413)
+def too_large(_error):
+    return jsonify({"error": "Image exceeds 10 MB upload limit"}), 413
 
 
 @app.route("/")
@@ -273,11 +294,21 @@ def predict():
         file = request.files["image"]
         if file.filename == "":
             return jsonify({"error": "No file was selected"}), 400
+        if model is None:
+            return jsonify({"error": "Disease model is unavailable"}), 503
+        if not file.mimetype.startswith("image/"):
+            return jsonify({"error": "Upload an image file"}), 400
         image_bytes = file.read()
+        try:
+            with Image.open(io.BytesIO(image_bytes)) as image:
+                image.verify()
+        except (UnidentifiedImageError, OSError, ValueError):
+            return jsonify({"error": "Invalid or corrupted image"}), 400
         result = predict_disease(image_bytes)
         return jsonify(result)
-    except Exception as exc:
-        return jsonify({"error": str(exc)}), 500
+    except Exception:
+        logger.exception("Prediction failed")
+        return jsonify({"error": "Prediction failed"}), 500
 
 
 # ==================================================================
@@ -288,4 +319,4 @@ if __name__ == "__main__":
     print("🌿 Kilimo Smart server starting...")
     print("👤 Author: Paul N. Magima | emryspaul7@gmail.com")
     print("📡 Open browser at: http://localhost:5000")
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=False, host="0.0.0.0", port=5000)
